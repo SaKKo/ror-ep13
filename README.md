@@ -1,24 +1,33 @@
-# README
+```
+rails g model User name:text
+rails g model Product sku:text
+rails g model Place name:text
+rails g model UserInterest user:references interestable:references{polymorphic}
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# rails g model UserInterest user:references interestable_id:integer:index interestable_type:string:index
+```
 
-Things you may want to cover:
+```
+u = User.create!(name: "sakko")
 
-* Ruby version
+10.times do |t|
+  Product.create!(sku: "SKU#{t}")
+  Place.create!(name: "Bangkok #{t}")
+end
 
-* System dependencies
+ui = UserInterest.new
+ui.user = u
+ui.interestable = Product.find(3)
+ui.save
 
-* Configuration
+ui = UserInterest.new
+ui.user = u
+ui.interestable = Product.find(5)
+ui.save
 
-* Database creation
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+ui = UserInterest.new
+ui.user = u
+ui.interestable = Place.find(9)
+ui.save
+```
